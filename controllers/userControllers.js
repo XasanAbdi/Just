@@ -3,14 +3,14 @@ import genrateToken from "../utilits/generateToken.js";
 
 
 export const register=async(req,res)=>{
-    const{name,email,password,phone,address}=req.body;
+    const{name,email,password,address,phone}=req.body;
     const userExist=Users.findOne({email})
     if (userExist) {
               res.status(400).json({message:"user allready exist"})  
     }
     else{
         const user =Users.create({
-            name,email,password,phone,address
+            name,email,password,address,phone
         })
         if (user) {
             res.status(201).json({
@@ -18,8 +18,8 @@ export const register=async(req,res)=>{
                 name:user.name ,
                 email:user.email ,
                 password:user.password ,
-                phone:user.phone ,
                 address:user.address ,
+                phone:user.phone ,
                 token:genrateToken(user._id)
     
             })
